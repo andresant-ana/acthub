@@ -17,3 +17,8 @@ output "app_service_plan_name" {
   description = "Name of the App Service Plan"
   value       = azurerm_service_plan.acthub.name
 }
+
+output "postgresql_server_fqdn" {
+  description = "Fully Qualified Domain Name of the PostgreSQL server"
+  value       = azurerm_postgresql_flexible_server.acthub.fqdn
+}

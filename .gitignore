@@ -5,6 +5,14 @@
 *.tfstate
 *.tfstate.*
 
+# Variables and secret files (CRÍTICO)
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
 # Crash log files
 crash.log
 
