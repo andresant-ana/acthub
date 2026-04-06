@@ -22,3 +22,13 @@ output "postgresql_server_fqdn" {
   description = "Fully Qualified Domain Name of the PostgreSQL server"
   value       = azurerm_postgresql_flexible_server.acthub.fqdn
 }
+
+output "key_vault_id" {
+  description = "ID of the Key Vault"
+  value       = azurerm_key_vault.acthub.id
+}
+
+output "key_vault_uri" {
+  description = "URI of the Key Vault"
+  value       = azurerm_key_vault.acthub.vault_uri
+}

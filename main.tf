@@ -20,6 +20,13 @@ resource "azurerm_postgresql_flexible_server" "acthub" {
   administrator_password = var.db_admin_password
   sku_name               = "B_Standard_B1ms"
   storage_mb             = 32768
+
+  lifecycle {
+    ignore_changes = [
+      zone,
+      high_availability
+    ]
+  }
 }
 
 resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_azure_internal" {
@@ -27,4 +34,34 @@ resource "azurerm_postgresql_flexible_server_firewall_rule" "allow_azure_interna
   server_id        = azurerm_postgresql_flexible_server.acthub.id
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
+}
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_key_vault" "acthub" {
+  name                     = "kv-acthub-${var.environment}"
+  resource_group_name      = azurerm_resource_group.acthub.name
+  location                 = azurerm_resource_group.acthub.location
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  sku_name                 = "standard"
+  purge_protection_enabled = false
+}
+
+resource "azurerm_key_vault_access_policy" "acthub" {
+  key_vault_id = azurerm_key_vault.acthub.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  secret_permissions = [
+    "Get", "List", "Set", "Delete",
+    "Recover", "Backup", "Restore", "Purge"
+  ]
+}
+
+resource "azurerm_key_vault_secret" "db_admin_password" {
+  name         = "db-admin-password"
+  value        = var.db_admin_password
+  key_vault_id = azurerm_key_vault.acthub.id
+
+  depends_on = [azurerm_key_vault_access_policy.acthub]
 }
