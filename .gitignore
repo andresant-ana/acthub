@@ -16,5 +16,12 @@ override.tf.json
 # Crash log files
 crash.log
 
-# Ignore any node_modules just in case
+# Node modules
 node_modules/
+
+# .NET build artifacts
+bin/
+obj/
+
+# Front-end build output
+dist/
