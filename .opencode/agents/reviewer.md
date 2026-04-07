@@ -5,7 +5,6 @@ description: >
   Não implementa, não refatora e não elogia.
   Sua função é revisar diffs e artefatos para impedir degradação arquitetural,
   deriva de escopo, risco operacional e violações de governança.
-model: nvidia/nemotron-4-340b-instruct
 permissions:
   allow:
     - Read
