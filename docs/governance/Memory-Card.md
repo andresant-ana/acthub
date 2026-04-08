@@ -130,6 +130,7 @@ A arquitetura e os modelos operacionais do ActHub são ancorados em preceitos bi
 - **Time Out Terraform (Context Canceled):** O Azure entrou em loop infinito ao tentar registrar dezenas de APIs irrelevantes de forma autônoma. Solucionado injetando a flag `resource_provider_registrations = "none"`.
 - **Bloqueio Global de Cota (Free VMs):** A Microsoft negou o provisionamento nas regiões norte-americanas para a assinatura de avaliação. Solucionado acionando pivô de infraestrutura, transferindo o datacenter para `brazilsouth` e consumindo créditos promocionais com a camada B1.
 - **Higiene de Repositório:** Pastas residuais geradas indevidamente por gerenciadores de pacote (`node_modules`, `bun.lock`) foram limpas cirurgicamente para não comprometer a IaC.
+- **Exposição Operacional de Credencial em Chat:** A senha administrativa do PostgreSQL foi exposta indevidamente em contexto de conversa e tratada como comprometida. Solucionado por rotação imediata da credencial, atualização do segredo no Azure Key Vault e sincronização do ambiente local.
 
 ## 10. Decisões Pendentes ou em Aberto
 
@@ -180,7 +181,7 @@ A arquitetura e os modelos operacionais do ActHub são ancorados em preceitos bi
 ## 13. Atualização de Estado — Preparação da Issue #10
 
 ### Resumo
-Foi concluída a preparação operacional e cognitiva para iniciar com segurança a Issue #10, cujo escopo permanece restrito ao scaffolding estrutural da Solution em C# (.NET 8) e do esqueleto React PWA, sem implementação de regra de negócio.
+Foi concluída a preparação operacional e cognitiva para iniciar com segurança a Issue #10, cujo escopo permaneceu restrito ao scaffolding estrutural da Solution em C# (.NET 8) e do esqueleto React PWA, sem implementação de regra de negócio.
 
 ### Governança Cognitiva Consolidada
 - Foi consolidada a dupla documental local de governança:
@@ -218,43 +219,60 @@ Foi concluída a preparação operacional e cognitiva para iniciar com seguranç
   - `Node.js v24.14.1`
   - `npm 11.11.0`
   - `git 2.43.0`
-- O ambiente está apto para iniciar o scaffolding da Issue #10.
-- O projeto permanece centralizado em `~/projects/acthub`, com desenvolvimento integral no WSL.
+- O ambiente foi validado como apto para iniciar o scaffolding da Issue #10.
+- O projeto permaneceu centralizado em `~/projects/acthub`, com desenvolvimento integral no WSL.
 
-### Estado Atual do Projeto
-- A preparação específica para a Issue #10 foi concluída.
-- A Issue #10 permanece em `In Progress` no GitHub Projects.
+### Estado Resultante da Preparação
+- A preparação específica para a Issue #10 foi concluída com sucesso.
 - Nenhum artefato funcional de aplicação foi gerado nesta etapa.
-- O workflow correto permanece:
+- O workflow correto foi consolidado como:
   1. planejamento estrutural;
   2. validação humana;
   3. execução controlada;
   4. revisão fria;
   5. aprovação humana final.
-- A Fase 1 ainda mantém pendência dos pipelines de CI/CD:
+- A Fase 1 permaneceu com pendência dos pipelines de CI/CD:
   - Issue #7
   - Issue #8
   - Issue #9
 
-### Regras Operacionais Reforçadas para a Issue #10
-- A Issue #10 deve ser tratada como scaffolding estrutural puro.
-- É proibido nesta issue:
-  - criar handlers;
-  - criar endpoints;
-  - implementar autenticação;
-  - implementar domínio rico;
-  - configurar persistência real;
-  - configurar MediatR funcional;
-  - configurar Polly, Serilog, OpenTelemetry ou Health Checks;
-  - implementar telas reais de produto;
-  - aplicar Clean Architecture tradicional;
-  - criar estruturas horizontais como `Controllers`, `Services`, `Repositories`, `Core`, `Application` ou `Infrastructure`.
-- Nenhuma IA possui permissão de autoaprovação.
-- O OpenCode só pode executar após plano aprovado pelo humano.
-- O Antigravity, neste estágio, atua como camada de planejamento estrutural e validação, não como executor físico principal.
+## 14. Fechamento da Issue #10 — Scaffolding Inicial da Aplicação
 
-### Pendências Imediatas
-- Executar o planejamento estrutural da Issue #10 no Antigravity.
-- Submeter o resultado ao gate `/plan` no OpenCode.
-- Executar o scaffolding físico apenas após luz verde humana explícita.
-- Revisar o diff gerado através do `/review` com o `@reviewer`.
+### Resumo
+A Issue #10 foi concluída com sucesso, entregando o scaffolding estrutural inicial do ActHub sem violação arquitetural e com aprovação em auditoria fria.
+
+### Entregas Concluídas
+- Criação da Solution `.NET 8` em `backend/ActHub.sln`
+- Criação do projeto de entrada `ActHub.Api`
+- Criação dos quatro módulos físicos isolados:
+  - `ActHub.Modules.Identity`
+  - `ActHub.Modules.CRM`
+  - `ActHub.Modules.TrainingPlanning`
+  - `ActHub.Modules.Execution`
+- Criação da fundação inicial do front-end React com Vite em `frontend/`
+- Inclusão de `manifest.webmanifest` mínimo para compatibilidade embrionária com PWA
+- Ajuste do `.gitignore` para cobertura de artefatos locais de build sem comprometer as proteções existentes de Terraform e segredos
+
+### Garantias Arquiteturais Confirmadas
+- Zero `ProjectReference` entre módulos
+- `ActHub.Api` sem referência aos módulos nesta issue
+- Ausência de handlers, commands, queries, endpoints e eventos
+- Ausência de autenticação, domínio rico, persistência real, MediatR funcional, Polly, Serilog, OpenTelemetry e Health Checks
+- Ausência de estruturas horizontais como `Controllers`, `Services`, `Repositories`, `Core`, `Application` e `Infrastructure`
+- Estrutura compatível com Monolito Modular e preparada para evolução posterior por Vertical Slice Architecture
+
+### Validações Executadas
+- `dotnet sln backend/ActHub.sln list`
+- `dotnet build backend/ActHub.sln`
+- `npm --prefix frontend install`
+- `npm --prefix frontend run build`
+- Revisão fria concluída com resultado geral `APROVADO`
+
+### Estado Resultante
+- O repositório agora possui base física segura para evolução do Monolito Modular em Vertical Slice Architecture.
+- A Issue #10 está apta a ser movida para `Done` no GitHub Projects.
+- As pendências remanescentes da Fase 1 continuam sendo:
+  - Issue #7 — Pipeline de Build
+  - Issue #8 — Pipeline de Análise Estática
+  - Issue #9 — Pipeline de Deploy
+- A reorganização futura da infraestrutura Terraform para diretório dedicado permanece como melhoria estrutural separada, fora do escopo desta issue.
