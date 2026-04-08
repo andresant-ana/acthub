@@ -176,7 +176,7 @@ A arquitetura e os modelos operacionais do ActHub são ancorados em preceitos bi
 
 - **Filosofia e Disciplina:** Aplica extrema disciplina mental derivada do comprometimento prolongado e sistemático com esportes de intensidade, especialmente musculação, transferindo essa ética para o estudo técnico. Prefere a diplomacia e a mitigação proativa de atritos interpessoais. Possui rotinas fixadas em hobbies de longo prazo, como esportes de acompanhamento tático e competições simuladas em Efootball. Estrutura ancorada em um relacionamento de suporte mútuo e longa data com Stephanie, centralizando o controle e a estabilidade essenciais para a alta performance na resolução de sistemas complexos.
 
-- **Setup e Ambiente de Execução:** Opera com máquina host Windows e desenvolvimento puramente virtualizado no WSL 2 Ubuntu Linux. Centraliza os esforços no caminho absoluto `~/projects/acthub`. Mantém preferência explícita por controle visual, aliando o poder do bash à gestão transparente das IDEs visuais através do Antigravity e da interface do OpenCode.
+- **Setup e Ambiente de Execução:** Opera com máquina host Windows e desenvolvimento puramente virtualizado no WSL 2 Ubuntu Linux. Centraliza os esforços no caminho absoluto `~/projects/acthub`. Mantém preferência explícita por controle visual, aliando o poder do bash à gestão transparente das IDEs visuais através do Antigravity e da interface do OpenCode. Após a reorganização estrutural do repositório, a aplicação passou a residir em `src/backend/` e `src/frontend/`, enquanto a infraestrutura Terraform passou a residir em `infra/terraform/`.
 
 ## 13. Atualização de Estado — Preparação da Issue #10
 
@@ -242,14 +242,14 @@ Foi concluída a preparação operacional e cognitiva para iniciar com seguranç
 A Issue #10 foi concluída com sucesso, entregando o scaffolding estrutural inicial do ActHub sem violação arquitetural e com aprovação em auditoria fria.
 
 ### Entregas Concluídas
-- Criação da Solution `.NET 8` em `backend/ActHub.sln`
+- Criação da Solution `.NET 8` em `src/backend/ActHub.sln`
 - Criação do projeto de entrada `ActHub.Api`
 - Criação dos quatro módulos físicos isolados:
   - `ActHub.Modules.Identity`
   - `ActHub.Modules.CRM`
   - `ActHub.Modules.TrainingPlanning`
   - `ActHub.Modules.Execution`
-- Criação da fundação inicial do front-end React com Vite em `frontend/`
+- Criação da fundação inicial do front-end React com Vite em `src/frontend/`
 - Inclusão de `manifest.webmanifest` mínimo para compatibilidade embrionária com PWA
 - Ajuste do `.gitignore` para cobertura de artefatos locais de build sem comprometer as proteções existentes de Terraform e segredos
 
@@ -262,17 +262,67 @@ A Issue #10 foi concluída com sucesso, entregando o scaffolding estrutural inic
 - Estrutura compatível com Monolito Modular e preparada para evolução posterior por Vertical Slice Architecture
 
 ### Validações Executadas
-- `dotnet sln backend/ActHub.sln list`
-- `dotnet build backend/ActHub.sln`
-- `npm --prefix frontend install`
-- `npm --prefix frontend run build`
+- `dotnet sln src/backend/ActHub.sln list`
+- `dotnet build src/backend/ActHub.sln`
+- `npm --prefix src/frontend install`
+- `npm --prefix src/frontend run build`
 - Revisão fria concluída com resultado geral `APROVADO`
 
 ### Estado Resultante
 - O repositório agora possui base física segura para evolução do Monolito Modular em Vertical Slice Architecture.
-- A Issue #10 está apta a ser movida para `Done` no GitHub Projects.
+- A Issue #10 foi considerada apta a ser movida para `Done` no GitHub Projects.
 - As pendências remanescentes da Fase 1 continuam sendo:
   - Issue #7 — Pipeline de Build
   - Issue #8 — Pipeline de Análise Estática
   - Issue #9 — Pipeline de Deploy
-- A reorganização futura da infraestrutura Terraform para diretório dedicado permanece como melhoria estrutural separada, fora do escopo desta issue.
+
+## 15. Reorganização Estrutural do Repositório Pós-Issue #10
+
+### Resumo
+Após a conclusão formal da Issue #10, a árvore do repositório foi reorganizada para separar com mais clareza governança, aplicação e infraestrutura, reduzindo colisão semântica na raiz e preparando melhor a evolução do projeto.
+
+### Movimentações Executadas
+- `backend/` foi movido para `src/backend/`
+- `frontend/` foi movido para `src/frontend/`
+- Os arquivos de infraestrutura Terraform da raiz foram movidos para `infra/terraform/`
+- Foram mantidos na raiz:
+  - `AGENTS.md`
+  - `ARCHITECTURE.md`
+  - `.gitignore`
+  - `.agents/`
+  - `.opencode/`
+  - `docs/`
+
+### Topologia Resultante
+- **Governança e contexto raiz:**
+  - `AGENTS.md`
+  - `ARCHITECTURE.md`
+  - `.agents/`
+  - `.opencode/`
+  - `docs/governance/Memory-Card.md`
+- **Aplicação:**
+  - `src/backend/`
+  - `src/frontend/`
+- **Infraestrutura:**
+  - `infra/terraform/`
+
+### Validações Executadas Após a Reorganização
+- `dotnet build src/backend/ActHub.sln`
+- `npm --prefix src/frontend run build`
+- `cd infra/terraform && terraform init`
+- `cd infra/terraform && terraform validate`
+
+### Garantias Operacionais Confirmadas
+- A reorganização não alterou o conteúdo funcional do scaffolding.
+- O back-end continuou compilando com sucesso no novo caminho.
+- O front-end continuou executando build com sucesso no novo caminho.
+- O Terraform voltou a validar corretamente após reexecução de `terraform init` no novo diretório.
+- Nenhum arquivo de estado ou variável sensível foi perdido durante a migração de caminhos.
+
+### Impacto de Governança
+- A raiz do repositório passou a refletir melhor seu papel de camada de entrada e governança.
+- O uso futuro dos agentes deve considerar os novos caminhos:
+  - `src/backend/`
+  - `src/frontend/`
+  - `infra/terraform/`
+- Qualquer workflow, rule, skill ou prompt que ainda referencie os caminhos antigos deve ser revisado progressivamente para evitar contexto defasado.
