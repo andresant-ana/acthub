@@ -1,4 +1,5 @@
 # Project State Document (PSD) - ActHub (Versão 3.0)
+Data de Atualização: 08/04/2026
 
 ## 1. Identidade do Projeto e Negócio
 O ActHub é um SaaS B2B2C voltado à gestão, periodização de treinos e acompanhamento biomecânico para personal trainers e seus alunos. O domínio principal foi particionado nos seguintes Bounded Contexts (módulos físicos):
@@ -32,6 +33,17 @@ A infraestrutura em nuvem foi declarada via Terraform e alocada na região `braz
 - **0003:** Mensageria em Memória via MediatR (`0003-mensageria-em-memoria-mediatr.md`)
 - **0004:** Infraestrutura em Nuvem Azure com Terraform (`0004-infraestrutura-nuvem-azure-terraform.md`)
 
-## 5. Trabalhos em Progresso (WIP) e Decisão Tática
+## 5. Ecossistema de Agentes (Toolchain Local)
+**Workflows Disponíveis:**
+- `/propose`: Elabora plano tático e aplica parada obrigatória (Pause-and-Wait) antes de qualquer alteração física.
+- `/implement`: Executa o plano físico rigorosamente.
+- `/review`: Auditor técnico de código gerado.
+
+**Skills Disponíveis:**
+- `dotnet-solution-scaffolding`
+- `react-pwa-foundation`
+- `terraform-azure`
+
+## 6. Trabalhos em Progresso (WIP) e Decisão Tática
 - **Prioridade Atual:** Aguardando início da Issue #7 (Pipeline de Build CI/CD via GitHub Actions).
 - **Decisão Tática (CI/CD):** Os pipelines do GitHub Actions adotarão o modelo de Isolamento por Path (um arquivo `.yml` para o C# e outro para o React) visando otimização de FinOps e prevenção de recompilações desnecessárias, acionando builds específicos de acordo com a área do repositório modificada.
