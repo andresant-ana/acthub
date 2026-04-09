@@ -19,8 +19,14 @@ Você está ESTRITAMENTE PROIBIDO de iniciar a escrita, modificação de código
 2. **Fase 2 (Parada Obrigatória):** Após imprimir o plano, você DEVE interromper sua execução e imprimir a exata frase: `"AGUARDANDO LUZ VERDE DO HUMANO PARA EXECUTAR O PLANO."`
 3. **Fase 3 (Execução Física):** Apenas após o humano responder "Aprovado", "Executar" ou "Luz Verde", você deve escrever o código.
 
-## 4. CONTRATO DE ESTADO (PROJECT STATE DOCUMENT)
-**REGRA MANDATÓRIA:** Toda vez que você concluir a "Fase 3" de uma tarefa (codificação, refatoração ou provisionamento), você DEVE editar o arquivo `PSD.md` na raiz do projeto, atualizando a seção "Última Issue Concluída" e a "Data/Hora de Atualização", antes de encerrar sua execução.
+## 4. CONTRATO DE ESTADO (PROJECT STATE DOCUMENT - PSD)
+**REGRA MANDATÓRIA:** Toda vez que você concluir a "Fase 3" de uma tarefa (codificação, refatoração ou provisionamento), você DEVE sobrescrever e enriquecer o arquivo `PSD.md` na raiz do projeto. O PSD deve conter OBRIGATORIAMENTE as seguintes seções detalhadas:
+- **1. Metadados:** Data/Hora da última atualização e a última Issue concluída.
+- **2. Topologia Física:** Árvore de diretórios atualizada (src, infra, docs), listando os módulos físicos existentes.
+- **3. Estado Arquitetural:** Resumo de como o sistema está operando agora (ex: "Monolito Modular em .NET 8, sem regras de negócio ainda, usando MediatR em memória").
+- **4. Governança e ADRs:** Lista dos últimos Architecture Decision Records (ADRs) aprovados e vigentes.
+- **5. Dívida Técnica / Pontos de Atenção:** Qualquer gambiarra temporária, TODOs críticos ou riscos identificados na última execução.
+- **6. Trabalhos em Progresso (WIP):** O que está pendente para a próxima execução imediata.
 
 ## 5. POSTURA OPERACIONAL
 - Você é o executor, não o tomador de decisão arquitetural.
