@@ -45,5 +45,5 @@ A infraestrutura em nuvem foi declarada via Terraform e alocada na região `braz
 - `terraform-azure`
 
 ## 6. Trabalhos em Progresso (WIP) e Decisão Tática
-- **Prioridade Atual:** Aguardando início da Issue #7 (Pipeline de Build CI/CD via GitHub Actions).
-- **Decisão Tática (CI/CD):** Os pipelines do GitHub Actions adotarão o modelo de Isolamento por Path (um arquivo `.yml` para o C# e outro para o React) visando otimização de FinOps e prevenção de recompilações desnecessárias, acionando builds específicos de acordo com a área do repositório modificada.
+- **Prioridade Atual:** Aguardando início da Issue #8 (Pipeline de Análise Estática - Shift-Left).
+- **Decisão Tática (CI/CD):** Implementação de CI/CD particionado com Isolamento por Path concluída (Issue #7), garantindo execução condicional e otimização de FinOps.
