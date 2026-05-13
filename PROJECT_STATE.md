@@ -3,7 +3,7 @@
 ## Status
 
 ```text
-Última atualização: 2026-05-12
+Última atualização: 2026-05-13
 Fonte de migração: PSD.md, docs/governance/Memory-Card.md, ARCHITECTURE.md e estado atual do repositório
 Maturidade: estado inicial migrado para o modelo do harness
 ```
@@ -49,6 +49,8 @@ Backend: solution .NET criada
 Frontend: fundação React PWA criada
 Infraestrutura: Terraform inicial existente
 CI/CD: pipeline backend build existente
+Documentação local do harness: migração principal concluída
+AGENTS.md: migrado para o modelo do harness
 Próxima prioridade registrada: pipeline de análise estática / shift-left
 ```
 
@@ -77,9 +79,73 @@ infra/terraform/
 docs/adrs/
   ADRs arquiteturais iniciais
 
+docs/product/
+  GTM_STRATEGY.md
+  PROJECT_ROADMAP.md
+
+docs/legacy/
+  PSD.legacy.md
+  Memory-Card.legacy.md
+
 .github/workflows/
   backend-build.yml
 ```
+
+---
+
+## Documentação operacional atual
+
+Os documentos locais do harness para o ActHub estão criados:
+
+```text
+WORKSPACE_GUIDE.md
+PROJECT_CONTEXT.md
+AUTHORITY_SOURCES.md
+LOCAL_COMMANDS.md
+PROJECT_STATE.md
+RISK_SURFACES.md
+DONE_CRITERIA.md
+OPERATIONAL_REALITY.md
+WORKTREE_POLICY.md
+GITHUB_PROJECTS_CONTEXT.md
+docs/product/GTM_STRATEGY.md
+docs/product/PROJECT_ROADMAP.md
+```
+
+O `AGENTS.md` foi migrado para o modelo do harness e agora orienta agentes a usar os documentos locais, não mais `PSD.md` como fonte operacional principal.
+
+---
+
+## Documentos legados
+
+Os documentos abaixo são legados:
+
+```text
+PSD.md
+docs/governance/Memory-Card.md
+docs/legacy/PSD.legacy.md
+docs/legacy/Memory-Card.legacy.md
+```
+
+Uso permitido:
+
+```text
+histórico
+auditoria
+recuperação de contexto antigo
+comparação durante migração
+```
+
+Uso proibido:
+
+```text
+fonte operacional principal
+estado técnico atual
+comando para agentes
+substituto de PROJECT_STATE.md
+```
+
+A verdade operacional atual deve vir dos documentos locais do harness, do código, dos ADRs e das configurações versionadas.
 
 ---
 
@@ -391,78 +457,53 @@ Mudanças de Azure devem considerar:
 
 ---
 
-### Agentes e documentação legada
+### Documentação legada
 
 Status:
 
 ```text
-migração em andamento
+legado preservado, não operacional
 ```
 
-`AGENTS.md`, `PSD.md` e `docs/governance/Memory-Card.md` ainda refletem o modelo antigo.
+`PSD.md` e `docs/governance/Memory-Card.md` foram substituídos operacionalmente por documentos locais do harness.
 
 Decisão atual:
 
-- documentos legados foram preservados em `docs/legacy/`;
-- novos documentos do harness passam a ser fonte operacional principal;
-- `AGENTS.md` será atualizado em onda posterior.
+- manter cópias históricas em `docs/legacy/`;
+- transformar arquivos legados ativos em stubs de depreciação;
+- não usar legados como fonte principal para agentes.
 
 ---
 
 ## Dívidas técnicas/documentais conscientes
 
-### Atualizar AGENTS.md
+### Decidir remoção futura dos stubs legados
 
 Motivo:
 
-`AGENTS.md` ainda exige uso de `PSD.md` e atualização obrigatória de PSD após toda task.
+`PSD.md` e `docs/governance/Memory-Card.md` ainda existem na árvore para compatibilidade e orientação histórica.
 
 Ação futura:
 
-Migrar para o modelo:
+Depois de alguns ciclos usando o harness, decidir se:
 
 ```text
-ler workspace docs
-usar PROJECT_STATE.md com parcimônia
-não transformar state em changelog
-seguir harness
+1. os stubs permanecem;
+2. os stubs são removidos;
+3. os caminhos antigos são mantidos apenas para referência de migração.
 ```
 
 ---
 
-### Decidir destino de PSD.md
+### Revisar ARCHITECTURE.md
 
 Motivo:
 
-`PSD.md` é legado e foi substituído conceitualmente por `PROJECT_STATE.md`.
+`ARCHITECTURE.md` é aproveitável e continua sendo fonte arquitetural principal, mas pode conter linguagem mais absoluta que o necessário.
 
 Ação futura:
 
-Após validação da migração, decidir se:
-
-```text
-1. PSD.md será removido;
-2. PSD.md será transformado em ponte apontando para PROJECT_STATE.md;
-3. PSD.md ficará temporariamente congelado como legado.
-```
-
----
-
-### Decidir destino de Memory-Card.md
-
-Motivo:
-
-`docs/governance/Memory-Card.md` mistura decisões, estado, GTM, histórico, contexto pessoal e issues.
-
-Ação futura:
-
-Após migração, decidir se:
-
-```text
-1. será removido;
-2. será congelado como legado;
-3. será substituído por documentos menores.
-```
+Revisar termos como “proibido” quando for melhor registrar como “não permitido por padrão salvo ADR explícita”.
 
 ---
 
@@ -494,13 +535,12 @@ Ação futura:
 
 ## Próximas ações naturais
 
-1. Preencher todos os documentos locais do harness.
-2. Atualizar `AGENTS.md`.
-3. Revisar `ARCHITECTURE.md` para remover linguagem excessivamente absoluta onde necessário.
-4. Subir fontes limpas no Project ActHub.
-5. Escolher primeira task piloto pequena.
-6. Gerar prompt para OpenCode usando o Core Architect.
-7. Rodar piloto com Completion Packet e Review Report.
+1. Concluir cleanup final dos legados.
+2. Subir fontes limpas no Project ActHub.
+3. Escolher primeira task piloto pequena.
+4. Gerar prompt para OpenCode usando o Core Architect.
+5. Rodar piloto com Completion Packet e Review Report.
+6. Avaliar se `PROJECT_STATE.md` precisa de atualização após o piloto.
 
 ---
 

@@ -50,56 +50,27 @@ Uso:
 
 ---
 
-### 2. Documentos locais do workspace
+### 2. ADRs específicos vigentes
 
-Fontes principais de contexto operacional:
-
-```text
-WORKSPACE_GUIDE.md
-PROJECT_CONTEXT.md
-AUTHORITY_SOURCES.md
-LOCAL_COMMANDS.md
-PROJECT_STATE.md
-RISK_SURFACES.md
-DONE_CRITERIA.md
-OPERATIONAL_REALITY.md
-WORKTREE_POLICY.md
-GITHUB_PROJECTS_CONTEXT.md
-```
-
-Uso:
-
-- orientar agentes;
-- classificar risco;
-- decidir validação;
-- preservar continuidade;
-- definir critérios de pronto.
-
----
-
-### 3. Arquitetura e decisões
-
-Fontes de arquitetura:
+Fontes de decisão arquitetural durável:
 
 ```text
-ARCHITECTURE.md
 docs/adrs/
 ```
 
 Uso:
 
-- validar decisões estruturais;
-- impedir horizontalização indevida;
-- avaliar boundaries;
-- justificar ou rejeitar mudanças arquiteturais.
+- resolver decisões arquiteturais específicas;
+- validar mudanças em boundaries;
+- confirmar decisões de runtime, cloud, banco, modularidade e padrões estruturais.
 
 Observação:
 
-`ARCHITECTURE.md` é fonte arquitetural principal, mas ADRs vencem quando forem mais específicos e mais recentes.
+Quando um ADR vigente for mais específico e mais recente que `ARCHITECTURE.md`, o ADR vence.
 
 ---
 
-### 4. Estado técnico durável
+### 3. Estado técnico durável
 
 Fonte:
 
@@ -126,9 +97,59 @@ Não usar para:
 
 ---
 
-### 5. Realidade operacional
+### 4. Documentos locais do workspace
+
+Fontes principais de contexto operacional:
+
+```text
+WORKSPACE_GUIDE.md
+PROJECT_CONTEXT.md
+AUTHORITY_SOURCES.md
+LOCAL_COMMANDS.md
+PROJECT_STATE.md
+RISK_SURFACES.md
+DONE_CRITERIA.md
+OPERATIONAL_REALITY.md
+WORKTREE_POLICY.md
+GITHUB_PROJECTS_CONTEXT.md
+```
+
+Uso:
+
+- orientar agentes;
+- classificar risco;
+- decidir validação;
+- preservar continuidade;
+- definir critérios de pronto.
+
+---
+
+### 5. Arquitetura geral
 
 Fonte:
+
+```text
+ARCHITECTURE.md
+```
+
+Uso:
+
+- entender direção arquitetural macro;
+- validar Monólito Modular;
+- validar Vertical Slice Architecture;
+- validar bounded contexts;
+- impedir horizontalização indevida;
+- avaliar mudanças estruturais.
+
+Observação:
+
+`ARCHITECTURE.md` é fonte arquitetural principal de visão geral, mas ADRs específicos vencem quando houver conflito.
+
+---
+
+### 6. Realidade operacional
+
+Fontes:
 
 ```text
 OPERATIONAL_REALITY.md
@@ -149,7 +170,32 @@ Uso:
 
 ---
 
-### 6. GitHub Issues e GitHub Projects
+### 7. Agentes
+
+Fonte:
+
+```text
+AGENTS.md
+```
+
+Uso:
+
+- orientar agentes executores;
+- definir leitura obrigatória;
+- limitar autonomia;
+- definir stop conditions;
+- proteger `PROJECT_STATE.md`;
+- impedir uso operacional de documentos legados.
+
+Status:
+
+```text
+migrado para o modelo do harness
+```
+
+---
+
+### 8. GitHub Issues e GitHub Projects
 
 Fontes de coordenação:
 
@@ -178,7 +224,7 @@ Done não prova validação.
 
 ---
 
-### 7. Documentos de produto
+### 9. Documentos de produto
 
 Fontes de estratégia de produto e GTM:
 
@@ -202,7 +248,7 @@ Documentos de produto não devem sobrepor arquitetura, segurança ou realidade t
 
 ---
 
-### 8. Documentos legados
+### 10. Documentos legados
 
 Fontes históricas:
 
@@ -287,7 +333,7 @@ AGENTS.md
 
 Observação:
 
-`AGENTS.md` ainda deve ser migrado para o novo modelo do harness. Enquanto isso não ocorrer, suas regras antigas devem ser lidas com cautela, especialmente a exigência de sobrescrever `PSD.md`.
+`.opencode/` e `.agents/` podem existir ou evoluir conforme o runtime local. Não assumir que comandos runtime-specific existem sem verificar arquivos reais.
 
 ---
 
@@ -387,6 +433,14 @@ Para tarefas de produto, também consultar:
 docs/product/GTM_STRATEGY.md
 docs/product/PROJECT_ROADMAP.md
 ```
+
+Para tarefas de board/issues, também consultar:
+
+```text
+GITHUB_PROJECTS_CONTEXT.md
+```
+
+Documentos legados só devem ser consultados se a tarefa for explicitamente sobre migração, auditoria histórica ou recuperação de contexto antigo.
 
 ---
 

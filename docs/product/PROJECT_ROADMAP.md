@@ -16,6 +16,8 @@ Sua função é orientar sequência estratégica, não rastrear cada tarefa gran
 Fase atual: Fundação técnica / preparação para qualidade e CI/CD
 Estado técnico: scaffolding estrutural concluído
 Domínio funcional: ainda não implementado
+Documentação local do harness: migração principal concluída
+AGENTS.md: migrado para o modelo do harness
 Próxima prioridade conhecida: pipeline de análise estática / shift-left
 ```
 
@@ -59,6 +61,8 @@ estrutura src/backend e src/frontend
 infra Terraform inicial
 backend build workflow
 ADRs iniciais
+documentação local do harness
+AGENTS.md atualizado para modelo do harness
 ```
 
 Ainda pendente/precisa confirmar:
@@ -69,7 +73,7 @@ pipeline de deploy
 validação Terraform em CI
 pipeline frontend
 testes automatizados
-atualização do AGENTS.md para harness novo
+destino final dos stubs legados após ciclos de uso
 ```
 
 ---
@@ -215,7 +219,7 @@ afiliados, se houver tração
 
 ## Roadmap técnico imediato
 
-### 1. Completar migração documental para harness
+### 1. Concluir cleanup final dos legados
 
 Status:
 
@@ -224,6 +228,18 @@ em andamento
 ```
 
 Inclui:
+
+```text
+PSD.md como stub de depreciação
+docs/governance/Memory-Card.md como stub de depreciação
+PROJECT_STATE.md alinhado após migração
+AUTHORITY_SOURCES.md alinhado após migração
+PROJECT_ROADMAP.md alinhado após migração
+```
+
+### 2. Subir fontes limpas no Project ActHub
+
+Fontes recomendadas:
 
 ```text
 PROJECT_CONTEXT.md
@@ -236,22 +252,18 @@ OPERATIONAL_REALITY.md
 WORKTREE_POLICY.md
 WORKSPACE_GUIDE.md
 GITHUB_PROJECTS_CONTEXT.md
+ARCHITECTURE.md
 docs/product/GTM_STRATEGY.md
 docs/product/PROJECT_ROADMAP.md
-AGENTS.md atualizado
 ```
 
-### 2. Atualizar AGENTS.md
-
-Objetivo:
-
-Migrar de modelo antigo baseado em `PSD.md` para modelo novo baseado em harness local.
-
-Mudança principal:
+Não subir:
 
 ```text
-não sobrescrever PSD após toda task
-avaliar PROJECT_STATE apenas quando houver memória técnica durável
+PSD.md
+docs/governance/Memory-Card.md
+docs/legacy/*
+PDFs originais
 ```
 
 ### 3. Escolher primeira task piloto
