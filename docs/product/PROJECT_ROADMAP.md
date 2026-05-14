@@ -4,9 +4,21 @@
 
 Este documento registra o roadmap macro do ActHub.
 
-Ele não substitui GitHub Projects, issues, PRs, ADRs ou `PROJECT_STATE.md`.
+Ele não substitui GitHub Projects, issues, PRs, ADRs, `PROJECT_STATE.md` ou `MVP_DEFINITION.md`.
 
 Sua função é orientar sequência estratégica, não rastrear cada tarefa granular.
+
+---
+
+## Fontes relacionadas
+
+```text
+PROJECT_STATE.md
+docs/product/MVP_DEFINITION.md
+docs/product/GTM_STRATEGY.md
+ARCHITECTURE.md
+docs/adrs/
+```
 
 ---
 
@@ -18,14 +30,76 @@ Estado técnico: scaffolding estrutural concluído
 Domínio funcional: ainda não implementado
 Documentação local do harness: migração principal concluída
 AGENTS.md: migrado para o modelo do harness
-Próxima prioridade conhecida: pipeline de análise estática / shift-left
+MVP: definido em docs/product/MVP_DEFINITION.md
+Próxima prioridade conhecida: fundação de qualidade antes de domínio funcional
 ```
 
 ---
 
-## Fase 1 — Fundação, infraestrutura e governança
+## Linha macro
 
-### Objetivo
+```text
+Fundação operacional
+↓
+Qualidade e testes
+↓
+Primeira persistência controlada
+↓
+Identity & CRM mínimo
+↓
+Prescrição de treino
+↓
+Execução do treino
+↓
+Histórico e progressão básica
+↓
+Piloto controlado
+```
+
+---
+
+# Fase 0 — Harness, documentação e prontidão do workspace
+
+## Objetivo
+
+Preparar o ActHub para trabalho governado com Core Architect + OpenCode.
+
+## Estado
+
+```text
+concluída na migração principal
+```
+
+## Entregas
+
+```text
+WORKSPACE_GUIDE.md
+PROJECT_CONTEXT.md
+AUTHORITY_SOURCES.md
+LOCAL_COMMANDS.md
+PROJECT_STATE.md
+RISK_SURFACES.md
+DONE_CRITERIA.md
+OPERATIONAL_REALITY.md
+WORKTREE_POLICY.md
+GITHUB_PROJECTS_CONTEXT.md
+docs/product/GTM_STRATEGY.md
+docs/product/MVP_DEFINITION.md
+docs/product/PROJECT_ROADMAP.md
+AGENTS.md migrado
+```
+
+## Pendência residual
+
+```text
+observar se stubs legados continuam necessários após alguns ciclos de uso
+```
+
+---
+
+# Fase 1 — Fundação, infraestrutura e governança
+
+## Objetivo
 
 Criar base técnica antes de escrever regra de negócio.
 
@@ -36,7 +110,7 @@ primeiro ambiente, governança, infraestrutura, CI/CD e scaffolding;
 depois domínio funcional.
 ```
 
-### Itens históricos
+## Itens históricos
 
 ```text
 Issue #1  — Setup de ambiente Linux/WSL
@@ -51,7 +125,7 @@ Issue #9  — Pipeline de Deploy
 Issue #10 — Scaffolding .NET e React PWA
 ```
 
-### Estado conhecido
+## Estado conhecido
 
 Concluído ou parcialmente concluído segundo estado migrado:
 
@@ -73,257 +147,301 @@ pipeline de deploy
 validação Terraform em CI
 pipeline frontend
 testes automatizados
-destino final dos stubs legados após ciclos de uso
 ```
 
 ---
 
-## Fase 2 — Núcleo backend e domínio mínimo
+# Fase 2 — Qualidade, testes e validação local
 
-### Objetivo
+## Objetivo
 
-Criar o backend funcional mínimo, mantendo Monólito Modular e Vertical Slice Architecture.
+Criar a base mínima para desenvolver domínio funcional sem depender de confiança textual.
 
-### Áreas
+## Entregas esperadas
 
 ```text
-Identity & Access
-Execution & Analytics
-Training Planning
-CRM & Engagement
-mensageria em memória quando justificada
-persistência PostgreSQL
+pipeline de análise estática
+pipeline frontend build
+validação Terraform em CI
+estrutura inicial de testes backend
+convenção de testes
+comandos de teste registrados em LOCAL_COMMANDS.md
 ```
 
-### Ordem recomendada
+## Por que vem antes do domínio
 
-Não iniciar pelo domínio mais complexo sem base de segurança e testes.
-
-Ordem provável:
-
-1. estrutura de testes;
-2. primeira fatia simples não sensível;
-3. persistência mínima;
-4. modelagem inicial de usuário/personal/aluno;
-5. auth/authz com plano forte;
-6. primeiros cálculos de Execution com testes;
-7. eventos inter-módulos só quando houver caso real.
-
-### Cuidados
-
-- auth/authz é R3;
-- migrations com dado real são R4;
-- Execution & Analytics exige testes fortes;
-- MediatR não deve ser antecipado sem fluxo real;
-- não criar abstrações genéricas por estética.
-
----
-
-## Fase 3 — Experiência PWA e fluxo do aluno
-
-### Objetivo
-
-Criar experiência de baixa fricção para aluno e personal.
-
-### Áreas
+O MVP tocará áreas sensíveis:
 
 ```text
-React PWA
-interface de aluno
-interface de personal
-registro de treino
-histórico básico
-visualização de evolução
+auth/authz
+dados de aluno
+vínculo personal-aluno
+migrations
+cálculos de progressão
 ```
 
-### Offline-first
+Sem build, testes e validação local, o risco de slop e regressão sobe cedo demais.
 
-Offline-first é desejável, mas não deve virar complexidade prematura.
-
-Implementar quando houver:
-
-- fluxo real de uso;
-- dado local necessário;
-- regra de sincronização;
-- risco de conflito entendido;
-- testes mínimos.
-
-### Cuidados
-
-- dados sensíveis no cliente;
-- IndexedDB;
-- cache;
-- service worker;
-- invalidação;
-- autenticação no frontend;
-- UX de erro/loading.
-
----
-
-## Fase 4 — Resiliência, observabilidade e prontidão operacional
-
-### Objetivo
-
-Preparar o sistema para uso real com diagnóstico, falha controlada e operação mínima.
-
-### Áreas
+## Candidatos para primeiro piloto com agente
 
 ```text
-Serilog
-OpenTelemetry
-Health Checks
-Polly
-config por ambiente
-deploy
-rollback
-monitoramento
+pipeline de análise estática
+pipeline frontend build
+validação Terraform em CI
+estrutura inicial de testes backend
 ```
 
-### Cuidados
-
-- observabilidade deve responder perguntas reais;
-- logs não podem vazar dados sensíveis;
-- retry exige idempotência;
-- health check deve refletir dependências reais;
-- deploy sem rollback é risco.
-
----
-
-## Fase 5 — Validação de mercado e GTM
-
-### Objetivo
-
-Validar valor com usuário real e aprender antes de escalar comercialmente.
-
-### Áreas
+## Evitar nesta fase
 
 ```text
-paciente zero
-prospecção B2B
-ativação inicial
-pricing
-feedback loop
-métricas de uso
-retenção
-afiliados, se houver tração
-```
-
-### Cuidados
-
-- não automatizar comercial antes de produto utilizável;
-- não implementar afiliados cedo demais;
-- não inflar dashboard de métricas sem uso real;
-- não sacrificar qualidade do core de treino por cosmética.
-
----
-
-## Roadmap técnico imediato
-
-### 1. Concluir cleanup final dos legados
-
-Status:
-
-```text
-em andamento
-```
-
-Inclui:
-
-```text
-PSD.md como stub de depreciação
-docs/governance/Memory-Card.md como stub de depreciação
-PROJECT_STATE.md alinhado após migração
-AUTHORITY_SOURCES.md alinhado após migração
-PROJECT_ROADMAP.md alinhado após migração
-```
-
-### 2. Subir fontes limpas no Project ActHub
-
-Fontes recomendadas:
-
-```text
-PROJECT_CONTEXT.md
-AUTHORITY_SOURCES.md
-LOCAL_COMMANDS.md
-PROJECT_STATE.md
-RISK_SURFACES.md
-DONE_CRITERIA.md
-OPERATIONAL_REALITY.md
-WORKTREE_POLICY.md
-WORKSPACE_GUIDE.md
-GITHUB_PROJECTS_CONTEXT.md
-ARCHITECTURE.md
-docs/product/GTM_STRATEGY.md
-docs/product/PROJECT_ROADMAP.md
-```
-
-Não subir:
-
-```text
-PSD.md
-docs/governance/Memory-Card.md
-docs/legacy/*
-PDFs originais
-```
-
-### 3. Escolher primeira task piloto
-
-Características:
-
-```text
-pequena
-real
-reversível
-validável
-sem segredo
-sem produção
-sem auth/authz
-sem Terraform apply
-```
-
-Candidatos prováveis:
-
-- análise estática;
-- pipeline frontend build;
-- validação Terraform em CI;
-- documentação operacional;
-- ajuste de workflow sem deploy.
-
-### 4. Rodar piloto com Core Architect + OpenCode
-
-Fluxo:
-
-```text
-Core Architect
-↓
-Execution Plan / prompt
-↓
-OpenCode
-↓
-Completion Packet
-↓
-Review
-↓
-state decision
+auth/authz
+Terraform apply
+deploy real
+migration com dado real
+mudança arquitetural estrutural
 ```
 
 ---
 
-## Ordem sugerida de issues futuras
+# Fase 3 — Base de domínio e persistência mínima
 
-A ordem exata deve ser confirmada no GitHub Projects, mas a sequência técnica recomendada é:
+## Objetivo
+
+Criar a primeira base funcional do backend sem inflar arquitetura.
+
+## Entregas esperadas
 
 ```text
-1. Pipeline de análise estática
-2. Pipeline frontend build
-3. Validação Terraform em CI
-4. Estrutura inicial de testes backend
-5. Primeira fatia backend simples
-6. Primeira persistência local controlada
-7. Identity/Auth com plano forte
-8. Execution calculation com testes
-9. Training planning mínimo
-10. CRM básico
+persistência local controlada
+modelo inicial de entidades
+primeira migration local
+primeira fatia vertical simples
+testes para regra mínima
+convenção de input validation
+```
+
+## Escopo provável
+
+Começar por área de menor risco que auth/authz.
+
+Candidatos:
+
+```text
+catálogo mínimo de exercícios
+estrutura inicial de aluno sem auth completa
+primeira entidade de treino sem execução real
+```
+
+## Cuidados
+
+- não criar repository genérico por ritual;
+- não criar abstração antes de dor real;
+- não acoplar módulos diretamente;
+- migrations locais exigem rollback mental;
+- dado real eleva risco.
+
+---
+
+# Fase 4 — Identity & CRM mínimo
+
+## Objetivo
+
+Permitir que personal e aluno existam no sistema com vínculo seguro.
+
+## Entregas esperadas
+
+```text
+cadastro/login básico
+perfil de personal
+perfil de aluno
+vínculo personal-aluno
+CRUD mínimo de alunos
+autorização backend básica
+proteção contra acesso cruzado
+```
+
+## Risco
+
+```text
+R3
+```
+
+Auth/authz é superfície sensível e precisa de plano forte, validação e review.
+
+## Fora do escopo nesta fase
+
+```text
+SSO
+MFA
+billing
+tiers completos
+admin enterprise
+RBAC complexo
+```
+
+---
+
+# Fase 5 — Prescrição de treino
+
+## Objetivo
+
+Permitir que o personal crie e atribua treinos para alunos.
+
+## Entregas esperadas
+
+```text
+catálogo mínimo de exercícios
+criação de treino
+edição de treino
+exercícios do treino
+séries
+repetições alvo
+carga alvo opcional
+RIR/RPE alvo opcional
+observações
+atribuição para aluno
+visualização do treino
+```
+
+## Fora do escopo
+
+```text
+periodização avançada
+macrociclos completos
+templates complexos
+prescrição coletiva
+automação inteligente
+```
+
+## Critério de avanço
+
+Um personal consegue prescrever um treino real sem depender de planilha externa.
+
+---
+
+# Fase 6 — Execução do treino pelo aluno
+
+## Objetivo
+
+Permitir que o aluno registre uma sessão real de treino.
+
+## Entregas esperadas
+
+```text
+tela de treino do aluno
+início de sessão
+registro por exercício
+carga realizada
+repetições realizadas
+RIR/RPE realizado quando aplicável
+finalização de sessão
+persistência do histórico
+```
+
+## Fora do escopo
+
+```text
+offline-first completo
+wearables
+chat
+mídia
+timer avançado
+```
+
+## Critério de avanço
+
+Uma sessão real consegue ser registrada do início ao fim.
+
+---
+
+# Fase 7 — Histórico e progressão básica
+
+## Objetivo
+
+Mostrar valor técnico ao personal por meio de histórico e evolução.
+
+## Entregas esperadas
+
+```text
+histórico por aluno
+histórico por exercício
+última execução
+evolução de carga
+evolução de repetições
+volume básico
+1RM estimado, se houver fórmula testada
+visualização simples
+```
+
+## Cuidados
+
+- cálculo errado destrói confiança;
+- fórmulas devem ser explícitas;
+- testes são obrigatórios para cálculo crítico;
+- não implementar analytics avançado cedo demais.
+
+---
+
+# Fase 8 — Piloto controlado
+
+## Objetivo
+
+Validar valor real com um personal trainer e poucos alunos.
+
+## Entregas esperadas
+
+```text
+ambiente controlado
+fluxo de uso documentado
+feedback do personal
+feedback de alunos
+registro de fricções
+lista de correções pós-piloto
+decisão sobre próxima fase
+```
+
+## Critério de sucesso
+
+O personal consegue usar o ActHub para acompanhar alunos reais ou semi-reais e perceber valor acima do método atual.
+
+---
+
+# Fase 9 — Pós-MVP
+
+## Objetivo
+
+Decidir o que entra depois com base no aprendizado do piloto.
+
+## Candidatos futuros
+
+```text
+billing
+tiers reais
+afiliados
+offline-first completo
+push notifications
+dashboards avançados
+churn prediction
+automação de progressão
+integrações
+produção pública
+```
+
+Nenhum desses itens deve ser antecipado sem evidência de dor real.
+
+---
+
+## Ordem técnica imediata recomendada
+
+```text
+1. Commitar MVP_DEFINITION.md e ajustes de state/roadmap
+2. Rodar primeiro piloto técnico com task pequena
+3. Implementar pipeline de análise estática
+4. Implementar pipeline frontend build
+5. Implementar validação Terraform em CI
+6. Criar estrutura inicial de testes backend
+7. Iniciar primeira fatia funcional simples
+8. Planejar Identity/Auth com tratamento R3
 ```
 
 ---
@@ -358,7 +476,8 @@ Avançar de fase apenas quando:
 - riscos principais estão mapeados;
 - state está atualizado com decisões duráveis;
 - não há pendência crítica de segurança;
-- próxima fase resolve dor real.
+- próxima fase resolve dor real;
+- a fase seguinte contribui diretamente para o MVP.
 
 ---
 
@@ -372,6 +491,7 @@ Atualizar este documento quando houver:
 - decisão de produto durável;
 - mudança de GTM;
 - mudança de arquitetura que afete sequência;
+- mudança no escopo do MVP;
 - aprendizado de piloto real.
 
 Não atualizar para cada commit ou issue pequena.

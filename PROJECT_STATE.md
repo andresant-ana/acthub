@@ -40,6 +40,24 @@ GitHub Actions
 
 ---
 
+## Linha de chegada do MVP
+
+A definição formal do MVP está em:
+
+```text
+docs/product/MVP_DEFINITION.md
+```
+
+Resumo:
+
+```text
+MVP = fluxo privado e funcional para um personal trainer cadastrar alunos, prescrever treinos, permitir execução pelo aluno, registrar histórico e visualizar progressão básica.
+```
+
+O MVP não é lançamento público de SaaS, marketplace, app nativo, billing completo, IA, BI avançado ou plataforma enterprise.
+
+---
+
 ## Estado atual resumido
 
 ```text
@@ -51,7 +69,8 @@ Infraestrutura: Terraform inicial existente
 CI/CD: pipeline backend build existente
 Documentação local do harness: migração principal concluída
 AGENTS.md: migrado para o modelo do harness
-Próxima prioridade registrada: pipeline de análise estática / shift-left
+MVP: definido em docs/product/MVP_DEFINITION.md
+Próxima prioridade registrada: fundação de qualidade antes de domínio funcional
 ```
 
 ---
@@ -81,6 +100,7 @@ docs/adrs/
 
 docs/product/
   GTM_STRATEGY.md
+  MVP_DEFINITION.md
   PROJECT_ROADMAP.md
 
 docs/legacy/
@@ -109,6 +129,7 @@ OPERATIONAL_REALITY.md
 WORKTREE_POLICY.md
 GITHUB_PROJECTS_CONTEXT.md
 docs/product/GTM_STRATEGY.md
+docs/product/MVP_DEFINITION.md
 docs/product/PROJECT_ROADMAP.md
 ```
 
@@ -310,6 +331,7 @@ sem persistência funcional implementada
 sem autenticação/autorização funcional implementada
 sem MediatR funcional aplicado ao domínio
 sem Polly/Serilog/OpenTelemetry/Health Checks funcionais aplicados
+sem testes automatizados consolidados
 ```
 
 ---
@@ -328,6 +350,7 @@ fundação inicial criada
 experiência final ainda não implementada
 offline-first ainda não implementado
 IndexedDB/service workers ainda não consolidados como feature
+build frontend ainda precisa ser consolidado em pipeline
 ```
 
 ---
@@ -377,6 +400,48 @@ gates de qualidade mais completos
 
 ---
 
+## Estado do MVP
+
+Status:
+
+```text
+MVP definido, não implementado
+```
+
+Funcionalidades ainda necessárias para MVP:
+
+```text
+Identity & Access mínimo
+CRM básico de alunos
+catálogo mínimo de exercícios
+prescrição de treino
+execução de treino pelo aluno
+histórico de execução
+progressão básica
+interface PWA mínima para personal e aluno
+operação mínima para piloto controlado
+```
+
+Fora do MVP:
+
+```text
+microsserviços
+Kubernetes
+CQRS global
+Event Sourcing
+app nativo
+marketplace
+billing completo
+afiliados
+IA generativa
+BI avançado
+churn prediction avançado
+offline-first completo
+produção pública
+```
+
+---
+
 ## Riscos técnicos ativos
 
 ### Secrets e Terraform State
@@ -419,6 +484,24 @@ ou `R4` se envolver segredo, produção ou dados reais.
 
 ---
 
+### Multi-tenancy e isolamento personal-aluno
+
+Status:
+
+```text
+não implementado, risco futuro alto
+```
+
+O MVP precisa impedir acesso cruzado entre personal trainers, alunos e dados de execução.
+
+Classificação provável:
+
+```text
+R3
+```
+
+---
+
 ### Banco de dados e migrations
 
 Status:
@@ -432,6 +515,20 @@ Risco:
 - migrations com dados reais serão sensíveis;
 - schema deve ser pensado com rollback e integridade;
 - query shape deve ser revisado.
+
+---
+
+### Cálculos de progressão
+
+Status:
+
+```text
+não implementado
+```
+
+Cálculos como volume e 1RM estimado devem ter fórmula explícita e testes.
+
+Erro nessa área prejudica a confiança central do produto.
 
 ---
 
@@ -470,7 +567,7 @@ legado preservado, não operacional
 Decisão atual:
 
 - manter cópias históricas em `docs/legacy/`;
-- transformar arquivos legados ativos em stubs de depreciação;
+- manter arquivos legados ativos como stubs de depreciação;
 - não usar legados como fonte principal para agentes.
 
 ---
@@ -535,8 +632,8 @@ Ação futura:
 
 ## Próximas ações naturais
 
-1. Concluir cleanup final dos legados.
-2. Subir fontes limpas no Project ActHub.
+1. Commitar `docs/product/MVP_DEFINITION.md` e ajustes de roadmap/state.
+2. Subir fontes macro limpas no Project ActHub, se for usar Project.
 3. Escolher primeira task piloto pequena.
 4. Gerar prompt para OpenCode usando o Core Architect.
 5. Rodar piloto com Completion Packet e Review Report.
@@ -556,7 +653,8 @@ Atualizar `PROJECT_STATE.md` apenas quando houver:
 - mudança operacional;
 - integração nova;
 - comando local relevante;
-- follow-up estrutural.
+- follow-up estrutural;
+- mudança no escopo do MVP.
 
 Não atualizar por:
 
