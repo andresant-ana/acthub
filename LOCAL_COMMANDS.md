@@ -116,6 +116,18 @@ dotnet restore src/backend/ActHub.sln
 dotnet build src/backend/ActHub.sln
 ```
 
+### Verify Formatting
+
+```bash
+dotnet format src/backend/ActHub.sln --verify-no-changes
+```
+
+### Security Check
+
+```bash
+dotnet list "$(pwd)/src/backend/ActHub.sln" package --vulnerable --include-transitive
+```
+
 ### Build sem restore
 
 ```bash
@@ -152,6 +164,12 @@ Usar apenas quando necessário. Evitar reinstalação sem motivo.
 
 ```bash
 npm --prefix src/frontend run build
+```
+
+### Type Check
+
+```bash
+npm --prefix src/frontend run type-check
 ```
 
 ### Outros scripts
