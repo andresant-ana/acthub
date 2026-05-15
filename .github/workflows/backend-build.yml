@@ -25,3 +25,9 @@ jobs:
 
       - name: Build
         run: dotnet build src/backend/ActHub.sln --no-restore
+
+      - name: Verify Formatting
+        run: dotnet format src/backend/ActHub.sln --verify-no-changes
+
+      - name: NuGet Vulnerability Check (Informative)
+        run: dotnet list "$GITHUB_WORKSPACE/src/backend/ActHub.sln" package --vulnerable --include-transitive
